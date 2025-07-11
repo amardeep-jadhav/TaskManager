@@ -1,0 +1,28 @@
+<!-- app/views/tasks/index.html.erb -->
+<div class="row">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header">
+        <h5>Add New Task</h5>
+      </div>
+      <div class="card-body">
+        <div id="new-task-form">
+          <%= render 'form', task: @task %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-8">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>My Tasks</h2>
+      <span id="tasks-count" class="badge bg-primary">
+          <%= pluralize(@tasks.count, 'task') %>
+      </span>
+    </div>
+    
+    <div id="tasks-container">
+      <%= render 'tasks_list' %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "tasks-container", partial: "tasks/tasks_list" %>
+
+<%= turbo_stream.replace "tasks-count" do %>
+  <span id="tasks-count" class="badge bg-primary">
+    <%= pluralize(@tasks.count, 'task') %>
+  </span>
+<% end %>

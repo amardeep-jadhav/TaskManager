@@ -1,0 +1,49 @@
+<!-- app/views/tasks/_form.html.erb -->
+<%= form_with model: task, local: true, class: "needs-validation", novalidate: true do |form| %>
+  <% if task.errors.any? %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control #{'is-invalid' if task.errors[:title].any?}", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, rows: 3, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :priority, class: "form-label" %>
+    <%= form.select :priority, [
+      ['Low', 'low'],
+      ['Medium', 'medium'],
+      ['High', 'high']
+    ], { selected: task.priority || 'medium' }, { class: "form-select" } %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :status, class: "form-label" %>
+    <%= form.select :status, [
+      ['Pending', 'pending'],
+      ['In Progress', 'in_progress'],
+      ['Completed', 'completed']
+    ], { selected: task.status || 'pending' }, { class: "form-select" } %>
+  </div>
+
+    <div class="mb-3">
+    	<%= form.label :due_date, class: "form-label" %>
+    	<%= form.date_field :due_date, class: "form-control", min: Date.today.strftime("%Y-%m-%d") %>
+    </div>
+
+  <div class="d-grid gap-2">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

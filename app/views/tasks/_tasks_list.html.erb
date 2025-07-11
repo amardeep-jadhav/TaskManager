@@ -1,0 +1,43 @@
+<div id="tasks-container">
+	<% if @tasks.any? %>
+		<% @tasks.each do |task| %>
+			<turbo-frame id="task_<%= task.id %>">
+				<div class="card mb-3" id="task_<%= task.id %>">
+					<div class="card-body">
+						<div class="row align-items-center">
+							<div class="col-md-6">
+								<h5 class="card-title mb-1"><%= task.title %></h5>
+								<p class="card-text text-muted mb-2"><%= truncate(task.description, length: 50) %></p>
+								<% if task.due_date %>
+									<small class="text-muted">Due: <%= task.due_date.strftime("%B %d, %Y") %></small>
+								<% end %>
+							</div>
+							
+							<div class="col-md-3">
+								<span class="badge bg-<%= task.priority_badge_class %>"><%= task.priority.capitalize %></span>
+								<span class="badge bg-<%= task.status_badge_class %>"><%= task.status.humanize %></span>
+							</div>
+							
+							<div class="col-md-3 text-end">
+								<%= link_to "Edit", edit_task_path(task), 
+										class: "btn btn-sm btn-outline-primary",
+										data: { turbo_frame: "task_#{task.id}" } 
+								%>
+								<%= button_to "Delete", task_path(task), 
+										method: :delete,
+										form: { "data-turbo-confirm": "Are you sure?", class: "d-inline" },
+										class: "btn btn-sm btn-outline-danger"
+								%>
+							</div>
+						</div>
+					</div>
+				</div>
+			</turbo-frame>
+		<% end %>
+	<% else %>
+		<div class="text-center py-5">
+			<h4 class="text-muted">No tasks yet</h4>
+			<p class="text-muted">Add your first task to get started!</p>
+		</div>
+	<% end %>
+<div id="tasks-container">
